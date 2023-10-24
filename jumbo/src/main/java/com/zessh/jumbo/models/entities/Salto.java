@@ -25,7 +25,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Salto implements Serializable {
 
-     public static final String TABLE_NAME = "salto";
+    public static final String TABLE_NAME = "salto";
 
     private static final long serialVersionUID = 1L;
 
