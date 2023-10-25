@@ -1,6 +1,7 @@
 package com.zessh.jumbo.models.entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -40,14 +41,17 @@ public class Avaliado implements Serializable{
     private double peso;
 
     @Column(name = "tamanho_perna_flexionada", nullable = false)
-    private double tamanho_perna_flexionada;
+    private double tamanhoPernaFlexionada;
 
     @Column(name = "tamanho_perna_estendida", nullable = false)
     private double tamanhoPernaEstendida;
 
     @Column(name = "data_cadastro", nullable = false)
-    private Date dataCadastro;
+    private LocalDate dataCadastro;
 
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
     
 }

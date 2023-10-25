@@ -1,5 +1,8 @@
 package com.zessh.jumbo.controllers;
 
+import com.zessh.jumbo.models.entities.Avaliado;
+import com.zessh.jumbo.services.AvaliadoService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,8 +16,42 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zessh.jumbo.models.dtos.AvaliadoDTO;
 
+import java.util.List;
+
 @RestController
-@RequestMapping(value = "/avaliados")
+@AllArgsConstructor
+@RequestMapping(value = "/api/avaliados")
 public class AvaliadoController {
+
+    private AvaliadoService avaliadoService;
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AvaliadoDTO> getAvaliadoById(@PathVariable("id") Long avaliadoId){
+        AvaliadoDTO avaliadoDTO = avaliadoService.buscaAvaliado(avaliadoId);
+        return new ResponseEntity<>(avaliadoDTO, HttpStatus.OK);
+    }
+    @GetMapping("/usuario/{id}")
+    public ResponseEntity<List<AvaliadoDTO>> getAvaliadosByUsuariosId(@PathVariable("id") Long userId){
+        List<AvaliadoDTO> avaliadoDTOLis = avaliadoService.buscaTodosAvaliadosPorIdUsuario(userId);
+        return new ResponseEntity<>(avaliadoDTOLis, HttpStatus.OK);
+    }
+    @PostMapping("/{id}")
+    public ResponseEntity<AvaliadoDTO> createAvaliado(@RequestBody AvaliadoDTO avaliadoDTO){
+        avaliadoService.cadastraAvaliado(avaliadoDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AvaliadoDTO> updateAvaliado(@PathVariable("id") Long id, @RequestBody AvaliadoDTO avaliadoDTO){
+        avaliadoService.atualizaAvaliado(avaliadoDTO, id);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<AvaliadoDTO> deleteAvaliado(@PathVariable("id") Long id){
+        avaliadoService.deletaAvaliado(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 }

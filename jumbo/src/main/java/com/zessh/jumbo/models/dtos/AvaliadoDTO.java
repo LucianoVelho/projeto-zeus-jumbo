@@ -29,6 +29,6 @@ public class AvaliadoDTO {
 
     private double tamanhoPernaEstendida;
 
-    private Usuario usuario;
+    private Long usuario;
 
 }
