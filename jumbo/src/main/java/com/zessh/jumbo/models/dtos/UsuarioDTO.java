@@ -1,7 +1,5 @@
 package com.zessh.jumbo.models.dtos;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +18,4 @@ public class UsuarioDTO {
     private String nome;
 
     private String sobrenome;
-
-    private Date dataCadastro;
 }

@@ -29,9 +29,6 @@ public class AvaliadoDTO {
 
     private double tamanhoPernaEstendida;
 
-    private Date dataCadastro;
-
     private Usuario usuario;
 
-    private List<Salto> saltos;
 }

@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = Usuario.TABLE_NAME)
+@Table(name = Salto.TABLE_NAME)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -30,8 +30,7 @@ public class Salto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "gen_" + TABLE_NAME)
-    @SequenceGenerator(name = "gen_" + TABLE_NAME, sequenceName = "sq_" + TABLE_NAME, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;  
 
     @Column(name = "altura_salto", nullable = false)

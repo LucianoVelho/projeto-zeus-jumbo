@@ -1,15 +1,10 @@
 package com.zessh.jumbo.models.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,14 +17,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Usuario implements Serializable {
-    
+
     public static final String TABLE_NAME = "usuario";
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "gen_" + TABLE_NAME)
-    @SequenceGenerator(name = "gen_" + TABLE_NAME, sequenceName = "sq_" + TABLE_NAME, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;  
 
     @Column(name = "email", nullable = false)
@@ -45,7 +39,6 @@ public class Usuario implements Serializable {
     private String sobrenome;
 
     @Column(name = "data_cadastro", nullable = false)
-    private Date dataCadastro;
-    
+    private LocalDate dataCadastro;
 
 }
