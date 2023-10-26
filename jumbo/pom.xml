@@ -71,9 +71,9 @@
 			<version>9.15.1</version>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-envers</artifactId>
-		</dependency>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-validation</artifactId>
+                </dependency>
 	</dependencies>
 
 	<build>

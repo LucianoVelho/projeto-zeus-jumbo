@@ -2,6 +2,7 @@ package com.zessh.jumbo.controllers;
 
 import com.zessh.jumbo.models.dtos.SaltoDTO;
 import com.zessh.jumbo.services.SaltoService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class SaltoController {
         return new ResponseEntity<>(saltoDTOList, HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<SaltoDTO> createSalto(@RequestBody SaltoDTO saltoDTO){
+    public ResponseEntity<SaltoDTO> createSalto(@RequestBody @Valid SaltoDTO saltoDTO){
         saltoService.cadastraSalto(saltoDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }

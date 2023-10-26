@@ -2,6 +2,7 @@ package com.zessh.jumbo.controllers;
 
 import com.zessh.jumbo.models.entities.Avaliado;
 import com.zessh.jumbo.services.AvaliadoService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,13 +37,13 @@ public class AvaliadoController {
         return new ResponseEntity<>(avaliadoDTOLis, HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<AvaliadoDTO> createAvaliado(@RequestBody AvaliadoDTO avaliadoDTO){
+    public ResponseEntity<AvaliadoDTO> createAvaliado(@RequestBody @Valid AvaliadoDTO avaliadoDTO){
         avaliadoService.cadastraAvaliado(avaliadoDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AvaliadoDTO> updateAvaliado(@PathVariable("id") Long id, @RequestBody AvaliadoDTO avaliadoDTO){
+    public ResponseEntity<AvaliadoDTO> updateAvaliado(@PathVariable("id") Long id, @RequestBody @Valid AvaliadoDTO avaliadoDTO){
         avaliadoService.atualizaAvaliado(avaliadoDTO, id);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

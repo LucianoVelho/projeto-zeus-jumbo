@@ -16,7 +16,6 @@ public class UsuarioService {
     
     private UsuarioRepositoty usuarioRepositoty;
     private UsuarioMapperImpl usuarioMapperImpl;
-    private AvaliadoRepository avaliadoRepository;
 
     public void criaUsuario(UsuarioDTO usuarioDTO){
         Usuario usuaruio = usuarioMapperImpl.toEntityUsuario(usuarioDTO);
