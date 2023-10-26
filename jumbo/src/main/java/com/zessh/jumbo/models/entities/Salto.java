@@ -1,6 +1,7 @@
 package com.zessh.jumbo.models.entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -36,20 +37,20 @@ public class Salto implements Serializable {
     @Column(name = "altura_salto", nullable = false)
     private double alturaSalto;
 
-    @Column(name = "tempo_voo", nullable = true)
-    private String tempoVoo;
+    @Column(name = "tempo_voo", nullable = false)
+    private double tempoVoo;
 
     @Column(name = "forca_media", nullable = false)
-    private String forcaMedia;
+    private double forcaMedia;
 
     @Column(name = "potencia_media", nullable = false)
-    private String potenciaMedia;
+    private double potenciaMedia;
 
     @Column(name = "velocidade_media", nullable = false)
-    private String velocidadeMedia;
+    private double velocidadeMedia;
 
     @Column(name = "data_cadastro", nullable = false)
-    private Date dataCadastro;
+    private LocalDate dataCadastro;
 
     @ManyToOne
     @JoinColumn(name = "avaliado_id")

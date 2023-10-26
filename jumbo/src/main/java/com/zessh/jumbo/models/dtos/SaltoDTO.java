@@ -17,16 +17,16 @@ public class SaltoDTO {
     
     private double alturaSalto;
 
-    private String tempoVoo;
+    private double tempoVoo;
 
-    private String forcaMedia;
+    private double forcaMedia;
 
-    private String potenciaMedia;
+    private double potenciaMedia;
    
-    private String velocidadeMedia;
+    private double velocidadeMedia;
 
-    private Date dataCadastro;
+    private double dataCadastro;
 
-    private Avaliado avaliado;
+    private Long avaliado;
 
 }

@@ -35,7 +35,7 @@ public class AvaliadoController {
         List<AvaliadoDTO> avaliadoDTOLis = avaliadoService.buscaTodosAvaliadosPorIdUsuario(userId);
         return new ResponseEntity<>(avaliadoDTOLis, HttpStatus.OK);
     }
-    @PostMapping("/{id}")
+    @PostMapping
     public ResponseEntity<AvaliadoDTO> createAvaliado(@RequestBody AvaliadoDTO avaliadoDTO){
         avaliadoService.cadastraAvaliado(avaliadoDTO);
         return new ResponseEntity<>(HttpStatus.OK);
