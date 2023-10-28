@@ -1,6 +1,5 @@
 package com.zessh.jumbo.validation.usuarioid;
 
-import com.zessh.jumbo.validation.avaliadoid.AvaliadoIdValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -17,4 +16,3 @@ public @interface ValidUsuarioId {
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
-

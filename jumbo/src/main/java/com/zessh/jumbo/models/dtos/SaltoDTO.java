@@ -34,7 +34,6 @@ public class SaltoDTO {
     @Positive(message = "A velocidade média deve ser um valor positivo")
     private double velocidadeMedia;
 
-    @ValidAvaliadoId
     private Long avaliado;
 
 }

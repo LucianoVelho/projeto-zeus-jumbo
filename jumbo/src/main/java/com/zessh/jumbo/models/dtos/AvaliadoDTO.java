@@ -39,15 +39,11 @@ public class AvaliadoDTO {
     @Positive(message = "O peso deve ser um valor positivo")
     private double peso;
 
-    @Positive(message = "O tamanho da perna flexionada deve ser um valor positivo")
     private double tamanhoPernaFlexionada;
 
     @Positive(message = "O tamanho da perna estendida deve ser um valor positivo")
     private double tamanhoPernaEstendida;
 
-    @NotBlank(message = "Usuario Inválido: Usuario Vazio")
-    @NotNull(message = "Usuario Inválido: Usuario é NULO")
-    @ValidUsuarioId
     private Long usuario;
 
 }

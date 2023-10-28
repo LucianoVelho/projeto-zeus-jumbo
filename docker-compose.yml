@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13.2
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+    networks:
+      - local-keycloak
+
+  keycloak:
+    depends_on:
+      - postgres
+    image: jboss/keycloak
+    container_name: local_keycloak
+    environment:
+      DB_VENDOR: postgres
+      DB_ADDR: postgres
+      KEYCLOAK_USER: admin
+      DB_DATABASE: keycloak
+      DB_USER: postgres
+      DB_PASSWORD: admin
+      KEYCLOAK_PASSWORD: admin 
+      KEYCLOAK_IMPORT: /tmp/realm-init/realm-export.json
+    ports:
+      - "8181:8080"
+    volumes:
+      - ./realm-init:/tmp/realm-init 
+    networks:
+      - local-keycloak
+
+  postgresSepring:
+    image: postgres
+    environment:
+      POSTGRES_DB: jumbo
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5431:5432"
+
+networks:
+  local-keycloak:
