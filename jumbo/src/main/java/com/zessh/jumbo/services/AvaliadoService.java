@@ -1,5 +1,6 @@
 package com.zessh.jumbo.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zessh.jumbo.models.dtos.AvaliadoDTO;
 import com.zessh.jumbo.models.entities.Avaliado;
 import com.zessh.jumbo.models.mappers.AvaliadosMapperImpl;
@@ -16,14 +17,15 @@ import java.util.List;
 @AllArgsConstructor
 public class AvaliadoService {
 
-    private UsuarioRepositoty usuarioRepositoty;
+    private UsuarioService usuarioService;
 
     private AvaliadoRepository avaliadoRepository;
 
     private AvaliadosMapperImpl avaliadosMapper;
-    public void cadastraAvaliado(AvaliadoDTO avaliadoDTO){
+    public void cadastraAvaliado(AvaliadoDTO avaliadoDTO) throws JsonProcessingException {
+        usuarioService.isUsuario(avaliadoDTO.getUsuario());
         Avaliado avaliado = avaliadosMapper.toEntityAvaliado(avaliadoDTO);
-        avaliado.setUsuario(usuarioRepositoty.getReferenceById(avaliadoDTO.getUsuario()));
+        avaliado.setUsuario(avaliadoDTO.getUsuario());
         avaliadoRepository.save(avaliado);
     }
 
@@ -33,7 +35,7 @@ public class AvaliadoService {
         return avaliadoDTO;
     }
 
-    public List<AvaliadoDTO> buscaTodosAvaliadosPorIdUsuario(Long id){
+    public List<AvaliadoDTO> buscaTodosAvaliadosPorIdUsuario(String id){
         List<AvaliadoDTO> avaliadoDTOList = new ArrayList<>();
         List<Avaliado> avaliados = avaliadoRepository.findAvaliadosByusuarioId(id);
         for(Avaliado a : avaliados){

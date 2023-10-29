@@ -3,6 +3,7 @@ package com.zessh.jumbo.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zessh.jumbo.models.dtos.EsqueceuDTO;
 import com.zessh.jumbo.models.dtos.LoginDTO;
+import com.zessh.jumbo.models.dtos.UsuarioTokenDTO;
 import com.zessh.jumbo.services.KeycloakService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -24,11 +25,10 @@ import lombok.AllArgsConstructor;
 public class UsuarioController {
 
     private UsuarioService usuarioService;
-    private KeycloakService keycloakService;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody @Valid LoginDTO loginDTO){
-        return usuarioService.login(loginDTO);
+    public ResponseEntity<UsuarioTokenDTO> login(@RequestBody @Valid LoginDTO loginDTO) throws JsonProcessingException {
+        return new ResponseEntity<>(usuarioService.login(loginDTO), HttpStatus.OK);
     }
     @PostMapping
     public ResponseEntity<UsuarioDTO> createUser(@RequestBody @Valid UsuarioDTO usuarioDTO) throws JsonProcessingException {

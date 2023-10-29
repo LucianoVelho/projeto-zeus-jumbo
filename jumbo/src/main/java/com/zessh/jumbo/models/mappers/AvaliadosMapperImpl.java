@@ -25,6 +25,7 @@ public abstract  class AvaliadosMapperImpl {
     }
     public AvaliadoDTO toDTOAvaliado(Avaliado avaliado){
         AvaliadoDTO avaliadoDTO = new AvaliadoDTO();
+        avaliadoDTO.setId(avaliado.getId());
         avaliadoDTO.setNome(avaliado.getNome());
         avaliadoDTO.setSobrenome(avaliado.getSobrenome());
         avaliadoDTO.setSexo(avaliado.getSexo());

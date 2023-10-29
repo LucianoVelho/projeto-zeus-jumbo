@@ -24,6 +24,7 @@ public abstract class SaltoMapperImpl {
     }
     public SaltoDTO toDTOSalto(Salto salto){
         SaltoDTO saltoDTO = new SaltoDTO();
+        saltoDTO.setId(salto.getId());
         saltoDTO.setAlturaSalto(salto.getAlturaSalto());
         saltoDTO.setForcaMedia(salto.getForcaMedia());
         saltoDTO.setPotenciaMedia(salto.getPotenciaMedia());

@@ -1,5 +1,6 @@
 package com.zessh.jumbo.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zessh.jumbo.models.entities.Avaliado;
 import com.zessh.jumbo.services.AvaliadoService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -36,12 +37,12 @@ public class AvaliadoController {
         return new ResponseEntity<>(avaliadoDTO, HttpStatus.OK);
     }
     @GetMapping("/usuario/{id}")
-    public ResponseEntity<List<AvaliadoDTO>> getAvaliadosByUsuariosId(@PathVariable("id") Long userId){
+    public ResponseEntity<List<AvaliadoDTO>> getAvaliadosByUsuariosId(@PathVariable("id") String userId){
         List<AvaliadoDTO> avaliadoDTOLis = avaliadoService.buscaTodosAvaliadosPorIdUsuario(userId);
         return new ResponseEntity<>(avaliadoDTOLis, HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<AvaliadoDTO> createAvaliado(@RequestBody @Valid AvaliadoDTO avaliadoDTO){
+    public ResponseEntity<AvaliadoDTO> createAvaliado(@RequestBody @Valid AvaliadoDTO avaliadoDTO) throws JsonProcessingException {
         avaliadoService.cadastraAvaliado(avaliadoDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }

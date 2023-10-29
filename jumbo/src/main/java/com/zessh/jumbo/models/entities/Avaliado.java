@@ -49,9 +49,8 @@ public class Avaliado implements Serializable{
     @Column(name = "data_cadastro", nullable = false)
     private LocalDate dataCadastro;
 
-    @ManyToOne
     @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    private String usuario;
 
     
 }

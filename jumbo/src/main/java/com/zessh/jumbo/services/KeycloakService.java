@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zessh.jumbo.models.dtos.KeycloakUserDTO;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -53,7 +54,11 @@ public class KeycloakService {
     @Value("${info.keycloak.url.user}")
     private String urlUser;
 
-    public ResponseEntity<String> getToken(String username, String password){
+    @Value("${info.keycloak.role.name}")
+    private String roleName;
+
+
+    public String getToken(String username, String password) throws JsonProcessingException {
         RestTemplate rt = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
 
@@ -68,9 +73,14 @@ public class KeycloakService {
         HttpEntity<MultiValueMap<String, String>> entity
                 = new HttpEntity<MultiValueMap<String,String>>(formData, headers);
 
-        var result = rt.postForEntity(urlGetToken, entity, String.class);
+        ResponseEntity<String> response  = rt.postForEntity(urlGetToken, entity, String.class);
 
-        return result;
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode root = objectMapper.readTree(response.getBody());
+
+        String accessToken = root.get("access_token").asText();
+
+        return accessToken;
     }
 
 
@@ -121,6 +131,36 @@ public class KeycloakService {
         return nodeList.get(0).get("id").asText();
 
     }
+    public KeycloakUserDTO getUserInfo(String userId) throws JsonProcessingException {
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + getTokenAdmin());
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        String userUrl = urlUser +"/"+ userId;
+        ResponseEntity<String> response = restTemplate.exchange(userUrl, HttpMethod.GET, entity, String.class);
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        return mapper.readValue(response.getBody(), KeycloakUserDTO.class);
+
+    }
+    public void isUser(String userId) throws JsonProcessingException {
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + getTokenAdmin());
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        String userExistUrl = urlUser+"/"+ userId;
+
+        restTemplate.exchange(userExistUrl, HttpMethod.HEAD, entity, String.class);
+
+    }
+
 
     public String getRelmId(String realmName) throws JsonProcessingException {
         RestTemplate rt = new RestTemplate();
@@ -172,27 +212,28 @@ public class KeycloakService {
         ResponseEntity<String> response = restTemplate.postForEntity(urlUser, requestEntity, String.class);
 
         if (response.getStatusCode() == HttpStatus.CREATED) {
-
-            HttpHeaders headersForRole = new HttpHeaders();
-            headersForRole.setContentType(MediaType.APPLICATION_JSON);
-            headersForRole.set("Authorization", "Bearer " + getTokenAdmin());
-
-            String userLocationHeader = response.getHeaders().getLocation().toString();
-            String[] segments = userLocationHeader.split("/");
-
-            String userId = segments[segments.length - 1];
-
-            Map<String, Object> role = Map.of("id", getRelmId("USER"), "name", "USER");
-
-            String assignRoleUrl = urlUser+"/"+userId+"/role-mappings/realm";
-
-            HttpEntity<Object> request = new HttpEntity<>(Collections.singletonList(role), headers);
-
-            ResponseEntity<String> roleAssignmentResponse = restTemplate.postForEntity(assignRoleUrl, request, String.class);
-            System.out.println(roleAssignmentResponse);
-        } else {
-            System.out.println("Falha ao criar o usuário. Resposta: " + response.getBody());
+            addUserRole(response);
         }
+    }
+
+    public void addUserRole(ResponseEntity<String> response) throws JsonProcessingException {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headersForRole = new HttpHeaders();
+        headersForRole.setContentType(MediaType.APPLICATION_JSON);
+        headersForRole.set("Authorization", "Bearer " + getTokenAdmin());
+
+        String userLocationHeader = response.getHeaders().getLocation().toString();
+        String[] segments = userLocationHeader.split("/");
+
+        String userId = segments[segments.length - 1];
+
+        Map<String, Object> role = Map.of("id", getRelmId(roleName), "name", roleName);
+
+        String assignRoleUrl = urlUser+"/"+userId+"/role-mappings/realm";
+
+        HttpEntity<Object> request = new HttpEntity<>(Collections.singletonList(role), headersForRole);
+
+        ResponseEntity<String> roleAssignmentResponse = restTemplate.postForEntity(assignRoleUrl, request, String.class);
     }
     public void updatePassword(String userId, String newPassword) throws JsonProcessingException {
 

@@ -36,4 +36,6 @@ public class SaltoDTO {
 
     private Long avaliado;
 
+    private Long id;
+
 }

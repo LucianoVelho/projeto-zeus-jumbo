@@ -1,15 +1,5 @@
 CREATE SCHEMA IF NOT EXISTS jumbo;
 
--- Tabela Usuário
-CREATE TABLE jumbo.usuario (
-    id BIGINT PRIMARY KEY,
-    email VARCHAR(255) NOT NULL,
-    senha VARCHAR(255) NOT NULL,
-    nome VARCHAR(255),
-    sobrenome VARCHAR(255),
-    data_cadastro TIMESTAMP
-);
-
 -- Tabela Avaliado
 CREATE TABLE jumbo.avaliado (
     id BIGINT PRIMARY KEY,
@@ -20,8 +10,7 @@ CREATE TABLE jumbo.avaliado (
     tamanho_perna_flexionada DOUBLE PRECISION,
     tamanho_perna_estendida DOUBLE PRECISION,
     data_cadastro TIMESTAMP,
-    usuario_id BIGINT,
-    FOREIGN KEY (usuario_id) REFERENCES jumbo.usuario(id)
+    usuario_id VARCHAR(255) NOT NULL
 );
 
 -- Tabela Salto

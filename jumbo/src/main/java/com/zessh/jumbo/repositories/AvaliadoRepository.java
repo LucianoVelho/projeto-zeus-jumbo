@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface AvaliadoRepository extends JpaRepository<Avaliado, Long> {
 
-    @Query(value="select a from Avaliado a where a.usuario.id = :id")
-    List<Avaliado> findAvaliadosByusuarioId (Long id);
+    @Query(value="select a from Avaliado a where a.usuario = :id")
+    List<Avaliado> findAvaliadosByusuarioId (String id);
     
 }

@@ -44,6 +44,8 @@ public class AvaliadoDTO {
     @Positive(message = "O tamanho da perna estendida deve ser um valor positivo")
     private double tamanhoPernaEstendida;
 
-    private Long usuario;
+    private String usuario;
+
+    private Long id;
 
 }
