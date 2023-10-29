@@ -28,7 +28,7 @@ public class KeycloakService {
     private String clientId;
 
     @Value("${info.keycloak.grant.type}")
-    private String grant_type;
+    private String grantType;
 
     @Value("${info.keycloak.get.token.user}")
     private String urlGetToken;
@@ -68,7 +68,7 @@ public class KeycloakService {
         formData.add("client_id", clientId);
         formData.add("username", username.trim());
         formData.add("password", password.trim());
-        formData.add("grant_type", grant_type);
+        formData.add("grant_type", grantType);
 
         HttpEntity<MultiValueMap<String, String>> entity
                 = new HttpEntity<MultiValueMap<String,String>>(formData, headers);
@@ -95,7 +95,7 @@ public class KeycloakService {
         formData.add("client_id", adminClientId);
         formData.add("username", adminUserName);
         formData.add("password", adminPassword);
-        formData.add("grant_type", grant_type);
+        formData.add("grant_type", grantType);
 
         HttpEntity<MultiValueMap<String, String>> entity
                 = new HttpEntity<MultiValueMap<String,String>>(formData, headers);

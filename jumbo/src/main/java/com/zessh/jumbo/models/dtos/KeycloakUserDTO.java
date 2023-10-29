@@ -14,7 +14,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class KeycloakUserDTO {
     private String id;
-    private String createdTimestamp; // Adicionando a propriedade
+    private String createdTimestamp;
     private String username;
     private boolean enabled;
     private boolean totp;
