@@ -52,7 +52,7 @@ services:
       - SONARQUBE_JDBC_URL=jdbc:postgresql://sonarqube-db:5432/sonarqube
     networks:
       - sonarnet
-      
+
   sonarqube-db:
     image: postgres:13.2
     container_name: sonarqube-db
@@ -64,9 +64,23 @@ services:
       - sonarqube-db-data:/var/lib/postgresql/data
     networks:
       - sonarnet
+  
+  jenkins:
+    image: jenkins/jenkins:lts-jdk17
+    container_name: jenkins
+    ports:
+      - "9090:8080"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    networks:
+      - jenkinsnet
+
 networks:
   local-keycloak:
   sonarnet:
     driver: bridge
+  jenkinsnet:
+
 volumes:
   sonarqube-db-data:
+  jenkins_home:

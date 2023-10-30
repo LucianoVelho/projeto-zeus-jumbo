@@ -56,6 +56,12 @@ public class KeycloakService {
 
     @Value("${info.keycloak.role.name}")
     private String roleName;
+    private static final String CLIENT_ID = "client_id";
+    private static final String USERNAME = "username";
+    private static final String PASSWORD = "password";
+    private static final String GRANT_TYPE = "grant_type";
+
+    private static final String ACCESS_TOKEN = "access_token";
 
 
     public String getToken(String username, String password) throws JsonProcessingException {
@@ -65,22 +71,19 @@ public class KeycloakService {
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
-        formData.add("client_id", clientId);
-        formData.add("username", username.trim());
-        formData.add("password", password.trim());
-        formData.add("grant_type", grantType);
+        formData.add(CLIENT_ID, clientId);
+        formData.add(USERNAME, username.trim());
+        formData.add(PASSWORD, password.trim());
+        formData.add(GRANT_TYPE, grantType);
 
-        HttpEntity<MultiValueMap<String, String>> entity
-                = new HttpEntity<MultiValueMap<String,String>>(formData, headers);
+        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(formData, headers);
 
         ResponseEntity<String> response  = rt.postForEntity(urlGetToken, entity, String.class);
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode root = objectMapper.readTree(response.getBody());
 
-        String accessToken = root.get("access_token").asText();
-
-        return accessToken;
+        return root.get(ACCESS_TOKEN).asText();
     }
 
 
@@ -92,22 +95,19 @@ public class KeycloakService {
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
-        formData.add("client_id", adminClientId);
-        formData.add("username", adminUserName);
-        formData.add("password", adminPassword);
-        formData.add("grant_type", grantType);
+        formData.add(CLIENT_ID, adminClientId);
+        formData.add(USERNAME, adminUserName);
+        formData.add(PASSWORD, adminPassword);
+        formData.add(GRANT_TYPE, grantType);
 
-        HttpEntity<MultiValueMap<String, String>> entity
-                = new HttpEntity<MultiValueMap<String,String>>(formData, headers);
+        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(formData, headers);
 
         ResponseEntity<String> response  = rt.postForEntity(adminUrlToken, entity, String.class);
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode root = objectMapper.readTree(response.getBody());
 
-        String accessToken = root.get("access_token").asText();
-
-        return accessToken;
+        return root.get(ACCESS_TOKEN).asText();
     }
 
     public String getUserId(String userName) throws JsonProcessingException {
