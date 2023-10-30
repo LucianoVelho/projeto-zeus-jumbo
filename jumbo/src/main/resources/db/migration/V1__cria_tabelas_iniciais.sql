@@ -1,7 +1,7 @@
-CREATE SCHEMA IF NOT EXISTS jumbo;
+CREATE SCHEMA IF NOT EXISTS jumpo;
 
 -- Tabela Usuário
-CREATE TABLE jumbo.usuario (
+CREATE TABLE jumpo.usuario (
     id BIGINT PRIMARY KEY,
     email VARCHAR(255) NOT NULL,
     senha VARCHAR(255) NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE jumbo.usuario (
 );
 
 -- Tabela Avaliado
-CREATE TABLE jumbo.avaliado (
+CREATE TABLE jumpo.avaliado (
     id BIGINT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     sobrenome VARCHAR(255) NOT NULL,
@@ -21,11 +21,11 @@ CREATE TABLE jumbo.avaliado (
     tamanho_perna_estendida DOUBLE PRECISION,
     data_cadastro TIMESTAMP,
     usuario_id BIGINT,
-    FOREIGN KEY (usuario_id) REFERENCES jumbo.usuario(id)
+    FOREIGN KEY (usuario_id) REFERENCES jumpo.usuario(id)
 );
 
 -- Tabela Salto
-CREATE TABLE jumbo.salto (
+CREATE TABLE jumpo.salto (
     id BIGINT PRIMARY KEY,
     altura_salto DOUBLE PRECISION,
     tempo_voo DOUBLE PRECISION,
@@ -34,5 +34,5 @@ CREATE TABLE jumbo.salto (
     velocidade_media DOUBLE PRECISION,
     data_cadastro TIMESTAMP,
     avaliado_id BIGINT,
-    FOREIGN KEY (avaliado_id) REFERENCES jumbo.avaliado(id)
+    FOREIGN KEY (avaliado_id) REFERENCES jumpo.avaliado(id)
 );
